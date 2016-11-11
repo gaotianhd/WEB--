@@ -102,7 +102,20 @@
            1、在IE的Internet选项菜单里的内容--自动完成里面设置
            2、设置Form的autocomplete为"on"或者"off"来开启或者关闭自动完成功能
            3、设置输入框的autocomplete为"on"或者"off"来开启或者关闭该输入框的自动完成功能
-###15、
+###15、如何实现浏览器内多个标签页之间的通信?
+         WebSocket、SharedWorker；
+         也可以调用localstorge、cookies等本地存储方式；
+         localstorge另一个浏览上下文里被添加、修改或删除时，它都会触发一个事件，
+         我们通过监听事件，控制它的值来进行页面信息通信；
+###16、webSocket如何兼容低浏览器？
+         WebSocket是目前"唯一"的一个浏览器下的Socket的标准, 它是通过浏览器内部提供的API来实现访问的. 低版本的浏览器没有
+         WebSocket这个标准, 就意味这些浏览器不允许用户通过它们来实现Socket通讯. 唯一的解决兼容性的办法就是准备一套Ajax 
+         + Server-side Script的后备方案. 比如Ajax + PHP Socket.
+         代码可以简单的写成
+          var socket = new WebSocket('...') || function() {
+          	// Ajax code
+          }
+###17、
       
        
        
