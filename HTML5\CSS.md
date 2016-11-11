@@ -1,20 +1,34 @@
 ###1、Doctype？严格模式与混杂模式如何区分？它门有何意义？
-     （1）、声明位于文档中的最前面，处于标签之前。告知浏览器的解析器，用什么文档类型规范来接系这个文档。
-     （2）、严格模式的排版和JS运作模式是以该浏览器支持的最高标准运行。
-     （3）、在混杂模式中，页面以宽松的向后兼容的方式显示。模拟老式浏览器的行为以防止站点无法工作。
-     （4）、DOCTYPE 不存在或格式不正确会导致文档以混杂模式呈现。
+答：告诉浏览器我们使用的是哪个版本的html协议（规范）。（对大小写不敏感）
+严格模式中根据规范呈现页面；混杂模式中页面是一种比较宽松的向后兼容的方式显示。
+（1）严格模式的HTML 4.0.1 strict
+       答：告诉浏览器我们使用的是哪个版本的html协议（规范）。（对大小写不敏感）
+       严格模式中根据规范呈现页面；混杂模式中页面是一种比较宽松的向后兼容的方式显示。
+       （1）严格模式的HTML 4.0.1 strict
+       DTD包括所有的HTML元素和属性，不包括展示的和弃用的元素。不许框架集（Framesets）
+       <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+       （2）混杂模式
+       DTD包括所有的HTML元素和属性，包括展示的和弃用的元素，以及框架集（Framesets）
+       <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+       "http://www.w3.org/TR/html4/frameset.dtd">
+       模式之间差异：最显著的一个例子与Windows上IE专有的盒模型有关
+       意义：DOCTYPE不存在或形式不正确会导致HTML和XHTML文档以混杂模式呈现。
 ###2、HTML5为什么只需要写〈!Doctype html〉？
       HTML5不基于 SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为（让浏览器按照它们应该的方式来运行）。
       而HTML4.01基于SGML,所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型。
 ###3、行内元素有哪些？块级元素有哪些？空元素有哪些？
-     （1）CSS规范规定，每个元素都有display属性，确定该元素的类型，每个元素都有默认display值,比如div
-         默认display属性值为"block",成为"块级"元素;  span默认display属性值为"inline"，是"行内"元素。
-     （2）行内元素有：a b span img input select strong  块级元素有：div ul ol li dl dt dd h1 h2 
-                   h3 h4 ...p    空元素有：br  hr  input  img
+     答：行内元素：a-描点；em-强调；strong-粗体强调；span-定义文本内区块；i-斜体；img-图片；b-
+         粗体；label-表格标签；select-项目选择；textarea-多行文本输入框；sub-下标；sup-上标；q-短引用
+         块元素：div-常用块；dl-定义列表；dt；dd；ul-非排序列表；li-排序列表；ol-排序表单；p-段落；
+         h1,h2,h3,h4,h5-标题；table-表格；form-表单
+         空元素：br-换行；hr-水平分隔线
 ###4、页面导入样式时，使用link和@import有什么区别？
-     （1）link属于XHTML标签，除了加载CSS外，还能用于定义RSS, 定义rel连接属性等作用；而@import是CSS提供的，只能用于加载CSS;
-     （2）页面被加载的时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载;
-     （3）import是CSS2.1 提出的，只在IE5以上才能被识别，而link是XHTML标签，无兼容问题。
+     答：相同的地方，都是外部引用CSS方式，区别：
+        （1）link是xhtml标签，除了加载css外，还可以定义RSS等其他事务；@import属于CSS范畴，只能加载 CSS
+        （2）link引用CSS时候，页面载入时同时加载；@import需要在页面完全加载以后加载
+        （3）link是xhtml标签，无兼容问题；@import是在css2.1提出来的，低版本的浏览器不支持
+        （4）link支持使用javascript控制去改变样式，而@import不支持
+         最优化的@import url（style.css）最值得推荐，字节最优化，兼容的浏览器多。
 ###5、介绍一下你对浏览器内核的理解？
       主要分成两部分：渲染引擎(layout engineer或Rendering Engine)和js引擎。
       渲染引擎：负责取得网页的内容（HTML、XML、图像等等）、整理讯息（例如加入CSS等），以及计算网页的显示方式，然后会输出至显
@@ -80,21 +94,35 @@
           404.html
           3.manifest文件的mime-type必须是 text/cache-manifest类型。
 ###10、浏览器是怎么对HTML5的离线储存资源进行管理和加载的呢？
+        答：（1）html5是使用一个manifest文件来标明那些文件是需要被存储，对于manifest文件，文件的
+             mime-type必须是text/cache-manifest类型。
+            （2）cache manifest下直接写需要缓存的文件，这里指明文件被缓存到浏览器本地；在network下指明
+             的文件，强制必须通过网络资源获取的；在failback下指明是一种失败的回调方案，比如无法访问，就
+             发出404.htm请求。
 ###11、请描述一下 cookies，sessionStorage 和 localStorage 的区别？
         cookie在浏览器和服务器间来回传递。sessionStorage和localStorage不会。
         sessionStorage和localStorage的存储空间更大;
         sessionStorage和localStorage有更多丰富易用的接口;
         sessionStorage和localStorage有各自独立的存储空间。
 ###12、iframe有那些缺点？
-        iframe会阻塞页面的Onload事件;
-        iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。使用iframe之前需要考虑这两个缺点。
-        如果需要使用iframe，最好是通过javascript动态给iframe添加src属性值，这样可以绕开以上两个问题。
+        优点：1.iframe能够原封不动的把嵌入的网页展现出来。
+        2.如果有多个网页引用iframe，那么你只需要修改iframe的内容，就可以实现调用的每一个页面内容的更改，方便快捷。
+        3.网页如果为了统一风格，头部和版本都是一样的，就可以写成一个页面，用iframe来嵌套，可以增加代码的可重用。
+        4.如果遇到加载缓慢的第三方内容如图标和广告，这些问题可以由iframe来解决。
+
+        缺点：（1）搜索引擎的“爬虫”程序无法解读这种页面。对于网站来说就是一种灾难
+        （2）框架结构让人感到迷茫，几个框架中出现各种滚动条。
+        （3）链接导航问题。使用框架结构时，保证设置正确的导航链接。
+        （4）iframe页面会增加服务器的http请求（基本上都用ajax来代替iframe）
 ###13、Label的作用是什么？是怎么用的？（加for或包裹）
-        作用：
-            label往往出现在表单中，在表单中用label标签是为了提高用户体验，它最大最好的用途就在于：如果你只是想在界面呈现出来
-            一些信息，而又不想让外界去操作，你给它赋什么值它就显示什么值，如果你不想让它显示信息的时候，就不给它赋值，操作起来
-            很方便。
-        用法：<label> 标签的 for 属性应当与相关元素的 id 属性相同。
+        Label 中有两个属性是非常有用的,一个是FOR、另外一个就是ACCESSKEY了。
+        FOR属性
+        功能：表示Label标签要绑定的HTML元素，你点击这个标签的时候，所绑定的元素将获取焦点。
+        用法：<Label FOR="InputBox">姓名</Label><input ID="InputBox" type="text">
+        ACCESSKEY属性：
+        功能：表示访问Label标签所绑定的元素的热键，当您按下热键，所绑定的元素将获取焦点。
+        用法：<Label FOR="InputBox" ACCESSKEY＝"N">姓名</Label><input ID="InputBox"
+        type="text"> 
              
              
 ###14、HTML5的form如何关闭自动完成功能？
@@ -115,7 +143,15 @@
           var socket = new WebSocket('...') || function() {
           	// Ajax code
           }
-###17、
+###17、页面可见性(Page Visibility API)可以有哪些用途？
+         JAVA API文档提供了很多官方的介绍和类、方法、变量的解释。一般很系统，涉及所有的方面，如果开发人员对正在使用的类不熟悉，
+         想查看类里面的变量或者方法，就可以打开JavaAPI文档进行阅读和查看。 很多开发语言都提供了官方的文档，可以让开发人员迅速
+         地提高能力。
+###18、如何在页面上实现一个圆形的可点击区域？
+        border-raduis
+        使用border-raduis方法：假定设置一个宽高均为100px;然后给它设置一个border-raduis属性，给它设置一个点击事件就可以了，
+        我们在这也可以设置一个cursor：pointer。
+###19、实现不使用border画出1px高的线，在不同浏览器的Quirksmode和CSSCompat模式下都保持同一效果。
       
        
        
